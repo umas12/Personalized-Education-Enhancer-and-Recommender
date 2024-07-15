@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login or Register</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        body, html {
+            margin: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .container {
+            text-align: center; /* Center content horizontally */
+        }
+        .centered-image {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            display: inline-block; /* Align the list items horizontally */
+            text-align: left;
+        }
+        li {
+            margin: 5px 0;
+        }
+        a {
+            text-decoration: none;
+            color: #007bff;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .top-left-logo img {
+            width: 100px; /* Adjust as necessary */
+            height: auto;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 10;
+        }
+        body {
+            margin: 0; /* Removes the default margin provided by the browser */
+            background-color: #f2f1e1;/* This is a light blue color */
+        }
+        
+    </style>
+</head>
+<body>   
+
+    
+    <div class="container">
+        <h1>PERSONALIZED EDUCATION ENHANCER & RECOMMENDER</h1>
+        <img src="{{ url_for('static', filename='images/PEER.png') }}" alt="Descriptive Text" class="centered-image">
+        <h2>Welcome to P.E.E.R!</h2>
+        <p>Please choose an option:</p>
+        <ul>
+            <li><a href="{{ url_for('login') }}">Login</a></li>
+            <li><a href="{{ url_for('register') }}">Register</a></li>
+        </ul>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>

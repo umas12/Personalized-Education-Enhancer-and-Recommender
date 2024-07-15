@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        .container {
+            max-width: 300px; /* Maximum width of the form */
+            margin: 0 auto; /* Auto margin for horizontal centering */
+            padding: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: adds a shadow for some depth */
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        input[type="text"],
+        input[type="password"] {
+            margin-bottom: 10px; /* Space out inputs */
+        }
+        button {
+            margin-top: 5px; /* Space above the button */
+        }
+        #error-message {
+            color: red;
+            margin-top: 10px;
+        }
+        body {
+            margin: 0; /* Removes the default margin provided by the browser */
+            background-color:#f2f1e1;/* This is a light blue color */
+        }
+        .centered-image {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            
+        }
+        .top-left-logo {
+            position: fixed; /* Fixes the position relative to the viewport */
+            top: 10px; /* Distance from the top of the viewport */
+            left: 10px; /* Distance from the left side of the viewport */
+            display: flex; /* Uses flexbox to align image and text side by side */
+            align-items: center; /* Aligns the image and text vertically */
+            z-index: 1000; /* Ensures the logo and text are above other content */
+        }
+
+        .top-left-logo img {
+            width: 50px; /* Adjust the width of your image */
+            height: auto; /* Maintains the aspect ratio of the image */
+            margin-right: 10px; /* Space between the image and the text */
+        }
+
+        .top-left-logo span {
+            color: #000000; /* Color of the text */
+            font-size: 14px; /* Size of the text */
+            font-weight: bold; /* Makes the text bold */
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="top-left-logo">
+        <img src="{{ url_for('static', filename='images/PEER.png') }}" alt="Descriptive Text">
+        <span>Personalized Education Enhancer & Recommender</span>
+    </div>
+
+    <div class="container">
+        
+        <img src="{{ url_for('static', filename='images/PEER.png') }}" alt="Descriptive Text" class="centered-image">
+        <h1>Register here</h1>
+        <form action="/register" method="POST">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" placeholder="Username">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="Password">
+            <label for="confirm_password">Confirm Password:</label>
+            <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm Password">
+            <button type="submit">Register</button>
+            <p id="error-message">{{ error }}</p>
+            <p>Already have an account? <a href="/login">Login here</a></p>
+        </form>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

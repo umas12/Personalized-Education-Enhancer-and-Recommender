@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .selected {
+            background-color: #dce4ed;
+        }
+        .float-right {
+            float: right;
+        }
+        .category-btn {
+            margin: 5px; /* Adds equal spacing around the buttons */
+            background-color:#f2f1e1;
+        }
+        .top-right {
+            position: fixed; /* Ensures it remains in place when scrolling */
+            top: 10px;
+            right: 10px;
+            color: rgb(252, 252, 249); /* Text color */
+             /* Button background color */
+        }
+        .centered-button-container {
+            display: flex;
+            justify-content: center; /* Centers the button horizontally */
+            margin-top: 20px; /* Adds some space above the button */
+        }
+        .card-title, .card-text, h2 {
+            text-align: center;
+        }
+        .card-body {
+            text-align: center;
+        }
+        body {
+            margin: 0; /* Removes the default margin provided by the browser */
+            background-color:#f2f1e1;/* This is a light blue color */
+        }
+        .centered-image {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            
+        }
+        .category-btn.selected {
+            background-color: #dee1a3 !important; /* Use !important to ensure override */
+        }
+        .top-left-logo {
+            position: fixed; /* Fixes the position relative to the viewport */
+            top: 10px; /* Distance from the top of the viewport */
+            left: 10px; /* Distance from the left side of the viewport */
+            display: flex; /* Uses flexbox to align image and text side by side */
+            align-items: center; /* Aligns the image and text vertically */
+            z-index: 1000; /* Ensures the logo and text are above other content */
+            
+        }
+
+        .top-left-logo img {
+            width: 50px; /* Adjust the width of your image */
+            height: auto; /* Maintains the aspect ratio of the image */
+            margin-right: 10px; /* Space between the image and the text */
+        }
+
+        .top-left-logo span {
+            color: #333; /* Color of the text */
+            font-size: 14px; /* Size of the text */
+            font-weight: bold; /* Makes the text bold */
+        }
+    </style>
+</head>
+<body>
+    <div class="top-left-logo">
+        <img src="{{ url_for('static', filename='images/PEER.png') }}" alt="Descriptive Text">
+        <span>Personalized Education Enhancer & Recommender</span>
+    </div>
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-body">
+                <h1 class="card-title">Welcome to P.E.E.R, {{ username }}!</h1>
+                <p class="card-text">You have successfully logged in.</p>
+                <h2>Please choose categories of your liking ! </h2>
+                <div id="categories">
+                    <button class="category-btn" data-category="Cloud Computing">Cloud Computing</button>
+                    <button class="category-btn" data-category="Cybersecurity">Cybersecurity</button>
+                    <button class="category-btn" data-category="SQL">SQL</button>
+                    <button class="category-btn" data-category="Human Computer Interaction">Human Computer Interaction</button>
+                    <button class="category-btn" data-category="Internet of Things">Internet of Things</button>
+                    <button class="category-btn" data-category="Extended Reality">Extended Reality</button>
+                    <button class="category-btn" data-category="Information Storage and Retrieval">Information Storage and Retrieval</button>
+                    <button class="category-btn" data-category="Robotics">Robotics</button>
+                    <button class="category-btn" data-category="Entrepreneurship">Entrepreneurship</button>
+                    <button class="category-btn" data-category="Graphic Design">Graphic Design</button>
+                    <button class="category-btn" data-category="Software Development">Software Development</button>
+                    <button class="category-btn" data-category="FinTech">FinTech</button>
+                    <button class="category-btn" data-category="Ethical Hacking">Ethical Hacking</button>
+                    <button class="category-btn" data-category="Mathematics">Mathematics</button>
+                    <button class="category-btn" data-category="Physics">Physics</button>
+                    <button class="category-btn" data-category="Chemistry">Chemistry</button>
+                    <button class="category-btn" data-category="Business Intelligence">Business Intelligence</button>
+                    <button class="category-btn" data-category="Data Science">Data Science</button>
+                    <button class="category-btn" data-category="Machine Learning">Machine Learning</button>
+                    <button class="category-btn" data-category="Deep Learning">Deep Learning</button>
+                    <button class="category-btn" data-category="Artificial Intelligence">Artificial Intelligence</button>
+                    <button class="category-btn" data-category="Blockchain and Cryptocurrencies">Blockchain and Cryptocurrencies</button>
+                    <button class="category-btn" data-category="Digital Marketing">Digital Marketing</button>
+                    <button class="category-btn" data-category="Project Management">Project Management</button>
+                    <button class="category-btn" data-category="Web Development">Web Development</button>
+                    <button class="category-btn" data-category="Programming">Programming</button>
+                    <button class="category-btn" data-category="Health and Nutrition">Health and Nutrition</button>
+                    <button class="category-btn" data-category="3D and Animation">3D and Animation</button>
+                    <button class="category-btn" data-category="Business">Business</button>
+                    <button class="category-btn" data-category="Computer Science">Computer Science</button>
+                    <button class="category-btn" data-category="Database Management">Database Management</button>
+                    <button class="category-btn" data-category="Data Analytics">Data Analytics</button>
+                    <button class="category-btn" data-category="DevOps">DevOps</button>
+                    <button class="category-btn" data-category="Information Technology">Information Technology</button>
+                    <button class="category-btn" data-category="Natural Language Processing">Natural Language Processing</button>
+                    <button class="category-btn" data-category="Python">Python</button>
+                    <button class="category-btn" data-category="Fashion Design">Fashion Design</button>
+                    <button class="category-btn" data-category="Android Development">Android Development</button>
+                    <button class="category-btn" data-category="Video Game Development">Video Game Development</button>
+                    <button class="category-btn" data-category="Javascript">Javascript</button>
+                    <button class="category-btn" data-category="UX Design">UX Design</button>
+                    <button class="category-btn" data-category="Architectural Design">Architectural Design</button>
+                    <button class="category-btn" data-category="Sports">Sports</button>
+                    
+
+
+
+                </div>
+                <div class="centered-button-container"></div>
+                <button id="save-btn" class="btn btn-primary">Save</button>
+                </div>
+                <a href="/login" class="btn btn-danger top-right">Logout</a> <!-- Updated logout button -->
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.category-btn').click(function() {
+                $(this).toggleClass('selected');
+                console.log('Category selected:', $(this).attr('data-category')); // Debugging line to check functionality
+            });
+
+            $('#save-btn').click(function() {
+                var selectedCategories = $('.selected').map(function() {
+                    return $(this).attr('data-category');
+                }).get();
+                console.log('Saving categories:', selectedCategories); // Debugging line
+
+                $.ajax({
+                    url: '/update_categories',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({username: '{{ username }}', categories: selectedCategories}),
+                    success: function(response) {
+                        alert(response.message);
+                        window.location.href = '/dashboard/{{ username }}';
+                    },
+                    error: function() {
+                        alert('Error updating categories.');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

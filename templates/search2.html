@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        html {
+        font-size: 14px; /* Sets a smaller base font size for the entire page */
+        }
+        .search-bar-container {
+            position: fixed;
+            top: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 800px; 
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            box-sizing: border-box;
+        }
+
+        .search-bar-container .form-control {
+            flex: 1 0 auto;
+            margin-right: 10px;
+        }
+
+        .search-bar-container .custom-select {
+            flex: 0 1 auto;
+            background-color: lightblue;
+            color: black;
+            border: 1px solid #ced4da;
+            border-radius: 0.25rem;
+            padding: 0.375rem 0.75rem;
+            margin-right: 10px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            min-width: 120px;
+        }
+
+        .search-bar-container .input-group-append {
+            flex-shrink: 0;
+        }
+        .top-right-buttons {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-results {
+            padding-top: 60px; /* Increased padding to accommodate fixed search bar */
+            margin: 0 auto;
+            max-width: 1200px; /* Adjusted width */
+        }
+
+        .recommendation {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: flex-start;
+        }
+        .spacing-within-content {
+            padding: 20px; /* Adjust the space within the content */
+        }
+        .column-header {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            padding-left: 235px; /* Increase left padding to 20px */
+            padding-top: 30px;
+        }
+        #personalized-message {
+        text-align: center; /* Optionally ensures text alignment within the h2 */
+        }
+        body {
+            margin: 0; /* Removes the default margin provided by the browser */
+            background-color:#f2f1e1;/* This is a light blue color */
+        }
+        .centered-image {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            
+        }
+        .top-left-logo {
+             /* Fixes the position relative to the viewport */
+            top: 10px; /* Distance from the top of the viewport */
+            left: 10px; /* Distance from the left side of the viewport */
+            display: flex; /* Uses flexbox to align image and text side by side */
+            align-items: center; /* Aligns the image and text vertically */
+            z-index: 1000; /* Ensures the logo and text are above other content */
+            padding-left: 10px; /* Adds padding to the left of the container */
+            padding-top: 10px;
+        }
+
+        .top-left-logo img {
+            width: 50px; /* Adjust the width of your image */
+            height: auto; /* Maintains the aspect ratio of the image */
+            margin-right: 10px; /* Space between the image and the text */
+        }
+
+        .top-left-logo span {
+            color: #333; /* Color of the text */
+            font-size: 14px; /* Size of the text */
+            font-weight: bold; /* Makes the text bold */
+        }
+    </style>
+</head>
+<body>
+    <div class="top-left-logo">
+        <img src="{{ url_for('static', filename='images/PEER.png') }}" alt="Descriptive Text">
+        <span>Personalized Education Enhancer & Recommender</span>
+    </div>
+    <div class="top-right-buttons">
+        <a href="/dashboard/{{ username }}" class="btn btn-info mr-2">Back to Dashboard</a>
+        <a href="/login" class="btn btn-danger">Logout</a>
+    </div>
+
+    <div class="search-bar-container">
+        <form action="/search2/{{ username }}" method="post" class="input-group">
+            <input type="text" name="query" placeholder="Search again..." class="form-control">
+            <select name="level" class="custom-select">
+                <option value="Beginner">Beginner</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Advanced">Advanced</option>
+            </select>
+            <div class="input-group-append">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="container search-results">
+        <h2 id="personalized-message">Here are some {{ selected_level }} level recommendations for you!</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="column-header" style="font-size: larger;">Online Resources</div>
+                {% for rec_online in recommendation_online %}
+                <div class="recommendation spacing-within-content" id="recommendation_online_{{ rec_online.index }}" style="display: flex; align-items: flex-start;">
+                    <div style="flex-shrink: 0; margin-right: 20px;">
+                        <img src="{{ rec_online.data.image_url }}" alt="{{ rec_online.data.title }} Cover" width="200"/>
+                    </div>
+                    <div style="flex-grow: 1;">
+                        <table style="width: 100%;">
+                            <tr><td><b>Title:</b></td><td>{{ rec_online.data.title }}</td></tr>
+                            <tr><td><b>Headline:</b></td><td>{{ rec_online.data.headline }}</td></tr>
+                            <tr><td><b>Instructor:</b></td><td>{{ rec_online.data.instructor}}</td></tr>
+                            <tr>
+                                <td><b>URL:</b></td>
+                                <td>
+                                    <a href="{{ rec_online.data.full_url }}" 
+                                       target="_blank" 
+                                       id="udemyCourseLink_{{ rec_online.index }}"
+                                       data-course-title="{{ rec_online.data.title | escape }}"
+                                       data-instructor-name="{{ rec_online.data.instructor | escape }}"
+                                       data-course-headline="{{ rec_online.data.headline | escape }}"
+                                       data-username="{{ username | escape }}"
+                                       onclick="trackUdemyClickFromLink('{{ rec_online.index }}');">
+                                        View Course
+                                    </a>
+                                </td>
+                            </tr>
+                            
+                        </table>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="col-md-6">
+                <div class="column-header" style="font-size: larger;">Books</div>
+                {% for rec, rec_online in recommendations|zip(recommendation_online) %}
+                <div class="recommendation spacing-within-content" id="recommendation_{{ rec.index }}">
+                    <div style="display: flex;">
+                        <div style="margin-right: 20px;"><img src="{{ rec.data.image_url }}" alt="No Book Image Found" width="200"/></div>
+                        <div>
+                            <table>
+                                <tr><td><b>Title:</b></td><td>{{ rec.data.Title }}</td></tr>
+                                <tr><td><b>Author:</b></td><td>{{ rec.data.Author }}</td></tr>
+                                <tr><td><b>Publisher:</b></td><td>{{ rec.data.Publisher }}</td></tr>
+                                <tr><td><b>Publication Date:</b></td><td>{{ rec.data['Publication Date'] }}</td></tr>
+                                <tr>
+                                    <td><b>Description:</b></td>
+                                    <td>
+                                        <span id="short_{{ rec.index }}">{{ rec.data.short_description }}</span>
+                                        <span id="long_{{ rec.index }}" style="display: none;">
+                                            {{ rec.data.Description | escape }}
+                                            <a href="javascript:void(0);" id="toggleLink_{{ rec.index }}" 
+                                               data-book-title="{{ rec.data.Title | escape }}"
+                                               data-author-name="{{ rec.data.Author | escape }}"
+                                               data-description="{{ rec.data.Description | escape }}"
+                                               data-username="{{ username | escape }}"
+                                               onclick="toggleDescription('{{ rec.index }}');">
+                                                Read less
+                                            </a>
+                                        </span>
+                                        <a href="javascript:void(0);" id="readMoreLink_{{ rec.index }}" 
+                                           data-book-title="{{ rec.data.Title | escape }}"
+                                           data-author-name="{{ rec.data.Author | escape }}"
+                                           data-description="{{ rec.data.Description | escape }}"
+                                           data-username="{{ username | escape }}"
+                                           onclick="toggleDescription('{{ rec.index }}');">
+                                            Read...
+                                        </a>
+                                    </td>
+                                </tr>
+                                <!-- <tr><td><b>Price:</b></td><td>{{ rec.data.Price }}</td></tr>
+                                <tr><td><b>Discounted Price:</b></td><td>{{ rec.data['Discounted Price'] }}</td></tr> -->
+                                <tr>
+                                    <td><b>Google URL:</b></td>
+                                    <td>
+                                        <a href="{{ rec.data['Google Play'] }}" 
+                                           target="_blank" 
+                                           id="googleBookLink_{{ rec.index }}" 
+                                           data-book-title="{{ rec.data.Title | escape }}"
+                                           data-author-name="{{ rec.data.Author | escape }}"
+                                           data-description="{{ rec.data.Description | escape }}"
+                                           data-username="{{ username | escape }}"
+                                           onclick="trackBookClickFromLink('{{ rec.index }}');">
+                                            View Book
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            
+        </div>
+    </div>
+
+    <script>
+        function trackBookClick(bookTitle, authorName, description, username) {
+            fetch(`/track_click/${username}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `book_title=${encodeURIComponent(bookTitle)}&author_name=${encodeURIComponent(authorName)}&description=${encodeURIComponent(description)}`
+            });
+        }
+            
+        function trackUdemyClick(courseTitle, instructorName, headline, username) {
+            fetch(`/track_udemy_click/${username}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+             body: `course_title=${encodeURIComponent(courseTitle)}&instructor_name=${encodeURIComponent(instructorName)}&headline=${encodeURIComponent(headline)}`
+            });
+        }
+
+        function trackUdemyClickFromLink(index) {
+            var element = document.getElementById("udemyCourseLink_" + index);
+            var courseTitle = element.getAttribute('data-course-title');
+            var instructorName = element.getAttribute('data-instructor-name');
+            var courseHeadline = element.getAttribute('data-course-headline');
+            var username = element.getAttribute('data-username');
+
+            trackUdemyClick(courseTitle, instructorName, courseHeadline, username);
+        }
+
+
+
+        function trackBookClickFromLink(index) {
+            var element = document.getElementById("googleBookLink_" + index);
+            var bookTitle = element.getAttribute('data-book-title');
+            var authorName = element.getAttribute('data-author-name');
+            var description = element.getAttribute('data-description');
+            var username = element.getAttribute('data-username');
+
+            trackBookClick(bookTitle, authorName, description, username);
+        }        
+
+        function toggleDescription(index) {
+            var shortText = document.getElementById("short_" + index);
+            var longText = document.getElementById("long_" + index);
+            var readMoreLink = document.getElementById("readMoreLink_" + index);
+            var toggleLink = document.getElementById("toggleLink_" + index);
+
+            if (longText.style.display === "none") {
+                // Show the long description and hide the short one
+                longText.style.display = "inline";
+                shortText.style.display = "none";
+                readMoreLink.style.display = "none";  // Hide 'Read more...' link
+                toggleLink.style.display = "inline";  // Show 'Read less' at the end of the long text
+            } else {
+                // Show the short description and hide the long one
+                longText.style.display = "none";
+                shortText.style.display = "inline";
+                readMoreLink.style.display = "inline";  // Show 'Read more...' link again
+                toggleLink.style.display = "none";  // Hide 'Read less'
+                
+                // Retrieve data from data attributes
+                var bookTitle = toggleLink.getAttribute('data-book-title');
+                var authorName = toggleLink.getAttribute('data-author-name');
+                var description = toggleLink.getAttribute('data-description');
+                var username = toggleLink.getAttribute('data-username');
+
+                // Track the book click
+                trackBookClick(bookTitle, authorName, description, username);
+            }
+        }
+        </script>
+</body>
+</html>
