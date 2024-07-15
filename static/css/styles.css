@@ -1,0 +1,86 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+p {
+    margin-top: 20px;
+    text-align: center;
+}
+
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+#error-message {
+    color: red;
+    margin-bottom: 10px;
+}
+
+.column-header {
+    font-weight: bold; /* Make the font bold */
+    margin-bottom: 20px; /* Adds space below the heading */
+    margin-top: 10px; /* Adds space above the heading */
+}
+
+.top-left-logo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+
+.top-left-logo img {
+    width: 100px; /* You can set the width to whatever size you prefer */
+    height: auto;
+}
